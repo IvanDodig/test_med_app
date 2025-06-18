@@ -1,30 +1,23 @@
-<!DOCTYPE html>
-<html lang="en">
-  <!-- Following code has been commented with appropriate comments for your reference. -->
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
-    <link rel="stylesheet" href="./Sign_Up.css" />
-    <!-- Linking external CSS file -->
-  </head>
-  <body>
-    <div class="signup__root-container">
-      <h1 class="signup__title">Sign Up</h1>
-      <div class="signup__subtitle">
-        Already a member?
-        <span
-          ><a href="../Login/Login.html" style="color: #2190ff"> Login</a></span
-        >
+import { Link } from "react-router-dom";
+import "./Sign_Up.css";
+const SignUp = () => {
+  return (
+    <div className="signup__root-container">
+      <h1 className="signup__title">Sign Up</h1>
+      <div className="signup__subtitle">
+        Already a member?{" "}
+        <Link to="/login" style={{ color: "#2190ff" }}>
+          Login
+        </Link>
       </div>
-      <form class="signup-form">
-        <div class="form-group">
+      <form className="signup-form">
+        <div className="form-group">
           <label for="role">Role</label>
           <select
             name="role"
             id="role"
             required
-            class="form-control"
+            className="form-control"
             placeholder="Select role"
             ariaDescribedby="helpId"
           >
@@ -32,82 +25,79 @@
             <option value="dog">Doctor</option>
             <option value="cat">Patient</option>
           </select>
-          <input
-            type="text"
-            name="name"
-            id="name"
-            required
-            class="form-control"
-            placeholder="Select role"
-            ariaDescribedby="helpId"
-          />
         </div>
-        <div class="form-group">
+        <div className="form-group">
           <label for="name">Name</label>
           <input
             type="text"
             name="name"
             id="name"
             required
-            class="form-control"
+            className="form-control"
             placeholder="Enter your name"
             ariaDescribedby="helpId"
           />
         </div>
 
-        <div class="form-group">
+        <div className="form-group">
           <label for="phone">Phone</label>
           <input
             type="tel"
             name="phone"
             id="phone"
             required
-            class="form-control"
+            className="form-control"
             placeholder="Enter your phone number"
-            ariaDescribedby="helpId"
+            aria-describedby="helpId"
+            pattern="\d{10}"
+            maxLength={10}
+            minLength={10}
+            title="Phone number must be exactly 10 digits"
           />
         </div>
 
-        <div class="form-group">
+        <div className="form-group">
           <label for="email">Email</label>
           <input
             type="email"
             name="email"
             id="email"
             required
-            class="form-control"
+            className="form-control"
             placeholder="Enter your email"
             ariaDescribedby="helpId"
           />
         </div>
 
-        <div class="form-group">
+        <div className="form-group">
           <label for="password">Password</label>
           <input
             name="password"
             id="password"
             required
-            class="form-control"
+            className="form-control"
             placeholder="Enter your password"
             ariaDescribedby="helpId"
           />
         </div>
 
-        <div class="btn-group">
+        <div className="btn-group">
           <button
             type="reset"
-            class="btn btn-danger mb-2 waves-effect waves-light"
+            className="btn btn-danger mb-2 waves-effect waves-light"
           >
             Reset
           </button>
           <button
             type="submit"
-            class="btn btn-primary mb-2 mr-1 waves-effect waves-light"
+            className="btn btn-primary mb-2 mr-1 waves-effect waves-light"
           >
             Submit
           </button>
         </div>
       </form>
     </div>
-  </body>
-</html>
+  );
+};
+
+export default SignUp;
