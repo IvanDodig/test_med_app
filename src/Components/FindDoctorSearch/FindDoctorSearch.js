@@ -1,6 +1,6 @@
-import React, { useState } from "react";
-import "./FindDoctorSearchIC.css";
-import { useNavigate, Navigate } from "react-router-dom";
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import "./FindDoctorSearch.css";
 
 const initSpeciality = [
   "Dentist",
@@ -12,7 +12,7 @@ const initSpeciality = [
   "Ayurveda",
 ];
 
-const FindDoctorSearchIC = () => {
+const FindDoctorSearch = () => {
   const [doctorResultHidden, setDoctorResultHidden] = useState(true);
   const [searchDoctor, setSearchDoctor] = useState("");
   const [specialities, setSpecialities] = useState(initSpeciality);
@@ -26,14 +26,6 @@ const FindDoctorSearchIC = () => {
   return (
     <div className="finddoctor">
       <center>
-        <h1>Find a doctor and Consult instantly</h1>
-        <div>
-          {" "}
-          <i
-            style={{ color: "#000000", fontSize: "20rem" }}
-            className="fa fa-user-md"
-          ></i>
-        </div>{" "}
         <div
           className="home-search-container"
           style={{
@@ -92,4 +84,4 @@ const FindDoctorSearchIC = () => {
   );
 };
 
-export default FindDoctorSearchIC;
+export default FindDoctorSearch;
