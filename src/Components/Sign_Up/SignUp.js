@@ -1,6 +1,49 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import "./Sign_Up.css";
+import { useState } from "react";
+import { API_URL } from "../../config";
+
 const SignUp = () => {
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [phone, setPhone] = useState("");
+  const [password, setPassword] = useState("");
+  const [showerr, setShowerr] = useState("");
+  const navigate = useNavigate();
+
+  const register = async (e) => {
+    e.preventDefault();
+    const response = await fetch(`${API_URL}/api/auth/register`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        name: name,
+        email: email,
+        password: password,
+        phone: phone,
+      }),
+    });
+    const json = await response.json();
+    if (json.authtoken) {
+      sessionStorage.setItem("auth-token", json.authtoken);
+      sessionStorage.setItem("name", name);
+      sessionStorage.setItem("phone", phone);
+      sessionStorage.setItem("email", email);
+      navigate("/");
+      window.location.reload();
+    } else {
+      if (json.errors) {
+        for (const error of json.errors) {
+          setShowerr(error.msg);
+        }
+      } else {
+        setShowerr(json.error);
+      }
+    }
+  };
+
   return (
     <div className="signup__root-container">
       <h1 className="signup__title">Sign Up</h1>
@@ -10,8 +53,8 @@ const SignUp = () => {
           Login
         </Link>
       </div>
-      <form className="signup-form">
-        <div className="form-group">
+      <form className="signup-form" method="POST" onSubmit={register}>
+        {/* <div className="form-group">
           <label for="role">Role</label>
           <select
             name="role"
@@ -25,10 +68,12 @@ const SignUp = () => {
             <option value="dog">Doctor</option>
             <option value="cat">Patient</option>
           </select>
-        </div>
+        </div> */}
         <div className="form-group">
           <label for="name">Name</label>
           <input
+            value={name}
+            onChange={(e) => setName(e.target.value)}
             type="text"
             name="name"
             id="name"
@@ -42,6 +87,8 @@ const SignUp = () => {
         <div className="form-group">
           <label for="phone">Phone</label>
           <input
+            value={phone}
+            onChange={(e) => setPhone(e.target.value)}
             type="tel"
             name="phone"
             id="phone"
@@ -59,6 +106,8 @@ const SignUp = () => {
         <div className="form-group">
           <label for="email">Email</label>
           <input
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
             type="email"
             name="email"
             id="email"
@@ -67,13 +116,21 @@ const SignUp = () => {
             placeholder="Enter your email"
             ariaDescribedby="helpId"
           />
+          {showerr && (
+            <div className="err" style={{ color: "red" }}>
+              {showerr}
+            </div>
+          )}
         </div>
 
         <div className="form-group">
           <label for="password">Password</label>
           <input
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
             name="password"
             id="password"
+            type="password"
             required
             className="form-control"
             placeholder="Enter your password"
