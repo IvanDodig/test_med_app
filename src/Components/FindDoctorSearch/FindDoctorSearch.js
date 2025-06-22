@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "./FindDoctorSearch.css";
 
@@ -16,6 +16,15 @@ const FindDoctorSearch = () => {
   const navigate = useNavigate();
   const [doctorResultHidden, setDoctorResultHidden] = useState(true);
   const [searchDoctor, setSearchDoctor] = useState("");
+  const [speciality, setSpecialty] = useState(initSpeciality);
+
+  useEffect(() => {
+    const filtered = initSpeciality.filter((s) =>
+      s.toLowerCase().includes(searchDoctor.toLowerCase())
+    );
+    setSpecialty(filtered);
+  }, [searchDoctor]);
+
   const handleDoctorSelect = (speciality) => {
     setSearchDoctor(speciality);
     setDoctorResultHidden(true);
@@ -57,7 +66,7 @@ const FindDoctorSearch = () => {
               className="search-doctor-input-results"
               hidden={doctorResultHidden}
             >
-              {initSpeciality.map((speciality) => (
+              {speciality.map((speciality) => (
                 <div
                   className="search-doctor-result-item"
                   key={speciality}
