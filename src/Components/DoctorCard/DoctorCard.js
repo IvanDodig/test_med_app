@@ -17,13 +17,14 @@ const DoctorCard = ({ name, speciality, experience, ratings }) => {
   };
 
   const handleFormSubmit = (appointmentData) => {
-    // const newAppointment = {
-    //   id: uuidv4(),
-    //   ...appointmentData,
-    // };
-    // const updatedAppointments = [...appointments, newAppointment];
-    // setAppointments(updatedAppointments);
-    // setShowModal(false);
+    const newAppointment = {
+      id: uuidv4(),
+      ...appointmentData,
+    };
+    console.log("New Appointment Data:", appointmentData);
+    const updatedAppointments = [...appointments, newAppointment];
+    setAppointments(updatedAppointments);
+    setShowModal(false);
   };
 
   return (
@@ -58,8 +59,16 @@ const DoctorCard = ({ name, speciality, experience, ratings }) => {
         <Popup
           style={{ backgroundColor: "#FFFFFF" }}
           trigger={
-            <button className="book-appointment-btn">
-              <div>Book Appointment</div>
+            <button
+              className={`book-appointment-btn ${
+                appointments.length > 0 ? "cancel-appointment" : ""
+              }`}
+            >
+              {appointments.length > 0 ? (
+                <div>Cancel Appointment</div>
+              ) : (
+                <div>Book Appointment</div>
+              )}
               <div>No Booking Fee</div>
             </button>
           }
@@ -99,8 +108,24 @@ const DoctorCard = ({ name, speciality, experience, ratings }) => {
                   </div>
                 </div>
               </div>
-
-              <AppointmentForm onSubmit={handleFormSubmit} />
+              {appointments.length > 0 ? (
+                <>
+                  <h3 style={{ textAlign: "center" }}>Appointment Booked!</h3>
+                  {appointments.map((appointment) => (
+                    <div className="bookedInfo" key={appointment.id}>
+                      <p>Name: {appointment.name}</p>
+                      <p>Phone Number: {appointment.phoneNumber}</p>
+                      <p>Date: {appointment.date}</p>
+                      <p>Time Slot: {appointment.timeSlot}</p>
+                      <button onClick={() => handleCancel(appointment.id)}>
+                        Cancel Appointment
+                      </button>
+                    </div>
+                  ))}
+                </>
+              ) : (
+                <AppointmentForm onSubmit={handleFormSubmit} />
+              )}
             </div>
           )}
         </Popup>

@@ -8,7 +8,7 @@ const AppointmentForm = ({ onSubmit }) => {
 
   const handleFormSubmit = (e) => {
     e.preventDefault();
-    onSubmit({ name, phoneNumber });
+    onSubmit({ name, phoneNumber, date, timeSlot });
     setName("");
     setPhoneNumber("");
     setDate();
