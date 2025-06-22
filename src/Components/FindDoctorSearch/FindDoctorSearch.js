@@ -13,14 +13,13 @@ const initSpeciality = [
 ];
 
 const FindDoctorSearch = () => {
+  const navigate = useNavigate();
   const [doctorResultHidden, setDoctorResultHidden] = useState(true);
   const [searchDoctor, setSearchDoctor] = useState("");
-  const [specialities, setSpecialities] = useState(initSpeciality);
-  const navigate = useNavigate();
   const handleDoctorSelect = (speciality) => {
     setSearchDoctor(speciality);
     setDoctorResultHidden(true);
-    navigate(`/instant-consultation?speciality=${speciality}`);
+    navigate(`/booking-consultation?speciality=${speciality}`);
     window.location.reload();
   };
   return (
@@ -58,7 +57,7 @@ const FindDoctorSearch = () => {
               className="search-doctor-input-results"
               hidden={doctorResultHidden}
             >
-              {specialities.map((speciality) => (
+              {initSpeciality.map((speciality) => (
                 <div
                   className="search-doctor-result-item"
                   key={speciality}

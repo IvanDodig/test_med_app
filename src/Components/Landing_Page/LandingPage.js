@@ -27,25 +27,6 @@ const LandingPage = () => {
           </div>
         </div>
       </section>
-      <FindDoctorSearch />
-      <DoctorCard
-        name="Dr. Jiao Yang"
-        speciality={"Dentist"}
-        experience={9}
-        ratings={5}
-      />
-      <DoctorCard
-        name="Dr. Denis Raj"
-        speciality={"Dentist"}
-        experience={24}
-        ratings={4}
-      />
-      <DoctorCard
-        name="Dr. Lyn Christie"
-        speciality={"Dentist"}
-        experience={11}
-        ratings={3}
-      />
     </>
   );
 };
