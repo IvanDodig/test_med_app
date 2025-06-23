@@ -5,7 +5,13 @@ import "./DoctorCard.css";
 import AppointmentForm from "../AppointmentForm/AppointmentForm";
 import Popup from "reactjs-popup";
 
-const DoctorCard = ({ name, speciality, experience, ratings }) => {
+const DoctorCard = ({
+  name,
+  speciality,
+  experience,
+  ratings,
+  setUpdateNotifications,
+}) => {
   const [showModal, setShowModal] = useState(false);
   const [appointments, setAppointments] = useState([]);
 
@@ -14,6 +20,10 @@ const DoctorCard = ({ name, speciality, experience, ratings }) => {
       (appointment) => appointment.id !== appointmentId
     );
     setAppointments(updatedAppointments);
+
+    localStorage.removeItem("doctorData");
+    localStorage.removeItem("appointmentData");
+    setUpdateNotifications((x) => !x);
   };
 
   const handleFormSubmit = (appointmentData) => {
@@ -23,8 +33,17 @@ const DoctorCard = ({ name, speciality, experience, ratings }) => {
     };
     console.log("New Appointment Data:", appointmentData);
     const updatedAppointments = [...appointments, newAppointment];
+    localStorage.setItem(
+      "doctorData",
+      JSON.stringify({
+        name,
+        speciality,
+      })
+    );
+    localStorage.setItem("appointmentData", JSON.stringify(appointmentData));
     setAppointments(updatedAppointments);
     setShowModal(false);
+    setUpdateNotifications((x) => !x);
   };
 
   return (

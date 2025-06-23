@@ -1,14 +1,15 @@
 import { useEffect, useState } from "react";
-import { useSearchParams } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import FindDoctorSearch from "../FindDoctorSearch/FindDoctorSearch";
 import DoctorCard from "../DoctorCard/DoctorCard";
 import "./BookingConsultation.css";
 
-const BookingConsultation = () => {
+const BookingConsultation = ({ setUpdateNotifications }) => {
   const [searchParams] = useSearchParams();
   const [doctors, setDoctors] = useState([]);
   const [filteredDoctors, setFilteredDoctors] = useState([]);
   const [isSearched, setIsSearched] = useState(false);
+  const navigate = useNavigate();
 
   const getDoctorsDetails = () => {
     fetch("https://api.npoint.io/9a5543d36f1460da2f63")
@@ -51,10 +52,10 @@ const BookingConsultation = () => {
   };
   useEffect(() => {
     getDoctorsDetails();
-    // const authtoken = sessionStorage.getItem("auth-token");
-    // if (!authtoken) {
-    //     navigate("/login");
-    // }
+    const authtoken = sessionStorage.getItem("auth-token");
+    if (!authtoken) {
+      navigate("/login");
+    }
   }, [searchParams]);
 
   return (
@@ -76,8 +77,9 @@ const BookingConsultation = () => {
                 filteredDoctors.map((doctor) => (
                   <DoctorCard
                     className="doctorcard"
-                    {...doctor}
                     key={doctor.name}
+                    setUpdateNotifications={setUpdateNotifications}
+                    {...doctor}
                   />
                 ))
               ) : (

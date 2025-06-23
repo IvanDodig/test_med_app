@@ -1,18 +1,21 @@
 import "./App.css";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import Navbar from "./Components/Navbar/Navbar";
 import LandingPage from "./Components/Landing_Page/LandingPage";
 import Login from "./Components/Login/Login";
 import SignUp from "./Components/Sign_Up/SignUp";
 import InstantConsultation from "./Components/InstantConsultationBooking/InstantConsultation";
 import BookingConsultation from "./Components/BookingConsultation/BookingConsultation";
 import Notification from "./Components/Notification/Notification";
+import { useState } from "react";
+import ReviewForm from "./Components/ReviewForm/ReviewForm";
 
 function App() {
+  const [updateNotifications, setUpdateNotifications] = useState(false);
+
   return (
     <>
       <BrowserRouter>
-        <Notification>
+        <Notification updateNotifications={updateNotifications}>
           <Routes>
             <Route path="/" element={<LandingPage />} />
             <Route path="/login" element={<Login />} />
@@ -23,8 +26,13 @@ function App() {
             />
             <Route
               path="/booking-consultation"
-              element={<BookingConsultation />}
+              element={
+                <BookingConsultation
+                  setUpdateNotifications={setUpdateNotifications}
+                />
+              }
             />
+            <Route path="/review-form" element={<ReviewForm />} />
           </Routes>
         </Notification>
       </BrowserRouter>

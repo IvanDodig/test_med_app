@@ -1,0 +1,36 @@
+.review-form-container {
+  padding: 30px;
+  max-width: 1000px;
+  margin: auto;
+}
+.review-form__page-title {
+  font-size: 32px;
+  margin-bottom: 20px;
+  font-weight: bold;
+}
+.review-form__table {
+  width: 100%;
+}
+
+.review-form__table-header {
+  background-color: #00000010;
+  border-bottom: 1px solid #00000025;
+  height: 50px;
+  font-size: 16px;
+  font-weight: 500;
+}
+
+.review-form__table-header th {
+  border: 0;
+  font-size: 16px;
+  font-weight: 500;
+  text-align: left;
+  padding-left: 20px;
+}
+
+.review-form__table td {
+  border: 0;
+  font-size: 16px;
+  text-align: left;
+  padding: 0 20px;
+}

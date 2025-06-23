@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import Navbar from "../Navbar/Navbar";
 import "./Notification.css";
 
-const Notification = ({ children }) => {
+const Notification = ({ children, updateNotifications }) => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [username, setUsername] = useState("");
   const [doctorData, setDoctorData] = useState(null);
@@ -12,22 +12,16 @@ const Notification = ({ children }) => {
     const storedUsername = sessionStorage.getItem("email");
     const storedDoctorData = JSON.parse(localStorage.getItem("doctorData"));
     const storedAppointmentData = JSON.parse(
-      localStorage.getItem(storedDoctorData?.name)
+      localStorage.getItem("appointmentData")
     );
 
     if (storedUsername) {
       setIsLoggedIn(true);
       setUsername(storedUsername);
     }
-
-    if (storedDoctorData) {
-      setDoctorData(storedDoctorData);
-    }
-
-    if (storedAppointmentData) {
-      setAppointmentData(storedAppointmentData);
-    }
-  }, []);
+    setDoctorData(storedDoctorData || null);
+    setAppointmentData(storedAppointmentData || null);
+  }, [updateNotifications]);
 
   return (
     <div>
@@ -42,19 +36,19 @@ const Notification = ({ children }) => {
                 <strong>Doctor:</strong> {doctorData?.name}
               </p>
               <p className="appointment-card__message">
-                <strong>speciality:</strong> {doctorData?.name}
+                <strong>Speciality:</strong> {doctorData?.speciality}
               </p>
               <p className="appointment-card__message">
-                <strong>Name:</strong> {doctorData?.name}
+                <strong>Name:</strong> {appointmentData?.name}
               </p>
               <p className="appointment-card__message">
-                <strong>Phone Number:</strong> {doctorData?.phone}
+                <strong>Phone Number:</strong> {appointmentData?.phoneNumber}
               </p>
               <p className="appointment-card__message">
                 <strong>Date of Appointment:</strong> {appointmentData?.date}
               </p>
               <p className="appointment-card__message">
-                <strong>Time slot:</strong> {doctorData?.name}
+                <strong>Time slot:</strong> {appointmentData?.timeSlot}
               </p>
             </div>
           </div>
