@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import "./Navbar.css";
 import { Link } from "react-router-dom";
 
@@ -59,9 +59,14 @@ const Navbar = () => {
           </li>
           {isLoggedIn ? (
             <>
-              <li className="nav__link">
-                Welcome, {username?.split("@")?.[0]}
-              </li>
+              <Dropdown title={` Welcome, ${username?.split("@")?.[0]}`}>
+                <Link to="/profile" className="dropdown-link">
+                  Your profile
+                </Link>
+                <Link to="/reports" className="dropdown-link">
+                  Your reports
+                </Link>
+              </Dropdown>
               <li className="nav__link">
                 <button className="nav__button" onClick={handleLogout}>
                   Logout
@@ -90,3 +95,34 @@ const Navbar = () => {
 };
 
 export default Navbar;
+
+const Dropdown = ({ title, children }) => {
+  const [isOpen, setIsOpen] = useState(false);
+  const dropdownRef = useRef(null);
+
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+        setIsOpen(false);
+      }
+    };
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
+
+  return (
+    <div className="dropdown" ref={dropdownRef}>
+      <li className="nav__link" onClick={() => setIsOpen((x) => !x)}>
+        {title}
+      </li>
+      <div
+        className="dropdown-content"
+        style={{ display: isOpen ? "block" : "none" }}
+      >
+        {children}
+      </div>
+    </div>
+  );
+};

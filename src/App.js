@@ -8,6 +8,8 @@ import BookingConsultation from "./Components/BookingConsultation/BookingConsult
 import Notification from "./Components/Notification/Notification";
 import { useState } from "react";
 import ReviewForm from "./Components/ReviewForm/ReviewForm";
+import ProfileForm from "./Components/ProfileCard/ProfileCard";
+import ReportsLayout from "./Components/ReportsLayout/ReportsLayout";
 
 function App() {
   const [updateNotifications, setUpdateNotifications] = useState(false);
@@ -33,6 +35,8 @@ function App() {
               }
             />
             <Route path="/review-form" element={<ReviewForm />} />
+            <Route path="/profile" element={<ProfileForm />} />
+            <Route path="/reports" element={<ReportsLayout />} />
           </Routes>
         </Notification>
       </BrowserRouter>
