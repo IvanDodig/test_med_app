@@ -188,3 +188,17 @@ button:hover {
   cursor: pointer;
   /* color: rgb(249, 60, 60); */
 }
+.review-form__rating {
+  display: flex;
+  gap: 5px;
+}
+
+.review-form__rating .fa-star {
+  font-size: 24px;
+  cursor: pointer;
+  color: lightgray;
+}
+
+.review-form__rating .fa-star.checked {
+  color: yellow;
+}

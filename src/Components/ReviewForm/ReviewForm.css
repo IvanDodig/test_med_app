@@ -34,3 +34,19 @@
   text-align: left;
   padding: 0 20px;
 }
+
+.review-form__popup-content {
+  padding: 50px;
+}
+
+.review-form__popup-content h3 {
+  text-align: center;
+  margin-bottom: 40px;
+  font-size: 28px;
+}
+
+.review-form-container button:disabled {
+  opacity: 0.5;
+  background-color: gray;
+  cursor: not-allowed;
+}

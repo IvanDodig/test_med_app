@@ -1,10 +1,18 @@
 import { useEffect, useState } from "react";
 import "./ReviewForm.css";
 import { useNavigate } from "react-router-dom";
+import Popup from "reactjs-popup";
+
+const INITIAL_FORM_DATA = { name: "", review: "", rating: 0 };
 
 const ReviewForm = () => {
   const navigate = useNavigate();
   const [doctors, setDoctors] = useState([]);
+  const [reviewDoctorId, setReviewDoctorId] = useState([]);
+
+  const [formData, setFormData] = useState(INITIAL_FORM_DATA);
+
+  const [submitedReviews, setSubmitedReviews] = useState({});
 
   useEffect(() => {
     const authtoken = sessionStorage.getItem("auth-token");
@@ -19,7 +27,12 @@ const ReviewForm = () => {
       .catch((err) => console.log(err));
   }, []);
 
-  const handleProvideFeedback = (doctorId) => {};
+  const handleFormSubmit = (e) => {
+    e.preventDefault();
+    setSubmitedReviews((x) => ({ ...x, [reviewDoctorId]: formData }));
+    setFormData(INITIAL_FORM_DATA);
+    setReviewDoctorId();
+  };
 
   return (
     <div className="review-form-container">
@@ -41,15 +54,85 @@ const ReviewForm = () => {
               <td>{doctor.name}</td>
               <td>{doctor.speciality}</td>
               <td>
-                <button onClick={() => handleProvideFeedback(doctor.id)}>
+                <button
+                  onClick={() => setReviewDoctorId(doctor.name)}
+                  disabled={!!submitedReviews[doctor.name]}
+                >
                   Click here
                 </button>
               </td>
-              <td>{doctor.review ? doctor.review : ""}</td>
+              <td>
+                {!!submitedReviews[doctor.name]
+                  ? submitedReviews[doctor.name]?.review
+                  : ""}
+              </td>
             </tr>
           ))}
         </tbody>
       </table>
+
+      <Popup
+        style={{ backgroundColor: "#FFFFFF" }}
+        modal
+        open={!!reviewDoctorId}
+        onClose={() => setReviewDoctorId()}
+        className="review-form__popup"
+      >
+        <h3>Give Your Review</h3>
+
+        <form onSubmit={handleFormSubmit} className="appointment-form">
+          <div className="form-group">
+            <label htmlFor="name">Name:</label>
+            <input
+              type="text"
+              id="name"
+              value={formData.name}
+              onChange={(e) =>
+                setFormData((x) => ({ ...x, name: e.target.value }))
+              }
+              required
+            />
+          </div>
+          <div className="form-group">
+            <label htmlFor="review">Review:</label>
+            <textarea
+              id="review"
+              value={formData.review}
+              onChange={(e) =>
+                setFormData((x) => ({ ...x, review: e.target.value }))
+              }
+              required
+            />
+          </div>
+
+          <div className="form-group">
+            <label htmlFor="review">Rating:</label>
+            <div className="review-form__rating">
+              <span
+                onClick={() => setFormData((x) => ({ ...x, rating: 1 }))}
+                class={`fa fa-star ${formData.rating > 0 ? "checked" : ""}`}
+              ></span>
+              <span
+                onClick={() => setFormData((x) => ({ ...x, rating: 2 }))}
+                class={`fa fa-star ${formData.rating > 1 ? "checked" : ""}`}
+              ></span>
+              <span
+                onClick={() => setFormData((x) => ({ ...x, rating: 3 }))}
+                class={`fa fa-star ${formData.rating > 2 ? "checked" : ""}`}
+              ></span>
+              <span
+                onClick={() => setFormData((x) => ({ ...x, rating: 4 }))}
+                class={`fa fa-star ${formData.rating > 3 ? "checked" : ""}`}
+              ></span>
+              <span
+                onClick={() => setFormData((x) => ({ ...x, rating: 5 }))}
+                class={`fa fa-star ${formData.rating > 4 ? "checked" : ""}`}
+              ></span>
+            </div>
+          </div>
+          <button type="submit">Submit</button>
+        </form>
+      </Popup>
     </div>
   );
 };
