@@ -55,7 +55,7 @@ const Navbar = () => {
             <a href="../Landing_Page/LandingPage.html">Home</a>
           </li>
           <li className="nav__link">
-            <a href="#">Appointments</a>
+            <Link to="/booking-consultation">Appointments</Link>
           </li>
           {isLoggedIn ? (
             <>
