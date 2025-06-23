@@ -1,0 +1,13 @@
+.appointment-card {
+  position: fixed;
+  bottom: 40px;
+  right: 40px;
+  background-color: #2190ff;
+  border-radius: 5px;
+  padding: 20px 25px;
+  color: white;
+}
+
+.appointment-card__title {
+  margin-bottom: 15px;
+}
